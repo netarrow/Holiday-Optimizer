@@ -16,11 +16,9 @@ export default function App() {
               let iconName;
 
               if (route.name === "List") {
-                iconName = focused
-                  ? "list"
-                  : "list"
+                iconName = "list"
               } else if (route.name === "Calendar") {
-                iconName = focused ? "calendar" : "calendar";
+                iconName = "calendar"
               }
 
               // You can return any component that you like here!
