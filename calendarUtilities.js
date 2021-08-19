@@ -1,9 +1,11 @@
 export default function generateCurrentYear() {
-    var now = new Date();
-    var end = now.setFullYear(now.getFullYear(), 13, 31)
+    var now, end
+    now = new Date()
+    end = new Date(2021, 11, 31, 0, 0, 0, 0)
     var daysOfYear = [];
     for (var d = now; d <= end; d.setDate(d.getDate() + 1)) {
-        daysOfYear.push({ date: d, isWeekend: d.getDay() === 0 || d.getDay() === 6 });
+        let day = new Date(d)
+        daysOfYear.push({ date: day, isWeekend: day.getDay() === 0 || day.getDay() === 6 });
     }
 
     return daysOfYear

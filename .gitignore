@@ -12,3 +12,4 @@ web-build/
 # macOS
 .DS_Store
 android/app/my-upload-key.keystore
+.gradle/gradle.properties
