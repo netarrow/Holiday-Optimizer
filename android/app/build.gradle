@@ -1,5 +1,4 @@
 android {
-    defaultConfig { ... }
     signingConfigs {
         release {
             if (project.hasProperty('MYAPP_UPLOAD_STORE_FILE')) {
