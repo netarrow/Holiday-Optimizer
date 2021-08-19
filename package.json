@@ -21,8 +21,7 @@
   "devDependencies": {
     "@babel/core": "^7.9.0",
     "expo": "^42.0.3",
-    "expo-status-bar": "^1.0.4",
-    "gradle": "^1.2.4"
+    "expo-status-bar": "^1.0.4"
   },
   "private": true
 }
