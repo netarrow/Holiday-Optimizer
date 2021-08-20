@@ -25,6 +25,7 @@
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.holidayOptimizer",
+      "versionCode": 2,
       "permissions": []
     },
     "web": {
