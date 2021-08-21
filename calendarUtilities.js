@@ -1,6 +1,7 @@
 export default function generateCurrentYear() {
     var now, end
     now = new Date()
+    now.setHours(0, 0, 0, 0)
     end = new Date(2021, 11, 31, 0, 0, 0, 0)
     var daysOfYear = [];
     for (var d = now; d <= end; d.setDate(d.getDate() + 1)) {
