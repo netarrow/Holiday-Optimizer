@@ -36,13 +36,16 @@ export default function ListView() {
             key={i}
             bottomDivider
             containerStyle={{
-              backgroundColor: date.isWeekend ? "#C9E4C5" : "whitesmoke",
+              backgroundColor: (date.isWeekend || date.isHoliday) ? "#C9E4C5" : "whitesmoke",
             }}
           >
             <ListItem.Content>
               <ListItem.Title>
                 {moment(date.date).locale("it-IT").format("dddd, D MMMM YYYY")}
               </ListItem.Title>
+              <ListItem.Subtitle>
+                {date.holidayName}
+              </ListItem.Subtitle>
             </ListItem.Content>
           </ListItem>
         ))}
