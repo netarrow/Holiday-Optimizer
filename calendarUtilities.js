@@ -8,7 +8,7 @@ function hashCode(s) {
 
 export default function generateCurrentYear(holidays) {
     var now, end
-    now = new Date()
+    now = new Date(2021, 0, 1, 0, 0, 0, 0)
 
     now.setHours(0, 0, 0, 0)
     end = new Date(2021, 11, 31, 0, 0, 0, 0)
