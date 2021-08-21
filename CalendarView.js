@@ -4,7 +4,7 @@ import { Text, View, StyleSheet } from "react-native";
 export default function CalendarView() {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text>Calendar View!</Text>
+        <Text>Calendar View Todo!</Text>
       </View>
     );
   }

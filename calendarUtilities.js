@@ -1,4 +1,4 @@
-export default function generateCurrentYear() {
+export default function generateCurrentYear(holidays) {
     var now, end
     now = new Date()
     now.setHours(0, 0, 0, 0)
