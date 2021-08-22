@@ -1,46 +1,45 @@
 import * as React from "react";
-import { Text, View, StyleSheet, Image, ScrollView } from "react-native";
-import { Card, ListItem, Button, Icon } from "react-native-elements";
+import { FlatList, View } from "react-native";
+import { ListItem, Card } from "react-native-elements";
 import moment from "moment";
-import 'moment/locale/it';
+import "moment/locale/it";
 
-export default function ListView(props) {
- 
-  return (
-    <ScrollView
+var keyExtractor = (item) => item.id;
+
+var renderItem = ({ item }) => (
+    <ListItem
+      bottomDivider
       containerStyle={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
+        width: "70%",
+        marginLeft: "auto",
+        marginRight: "auto",
+        backgroundColor:
+          item.isWeekend || item.isHoliday ? "#C9E4C5" : "whitesmoke",
       }}
     >
-      <Card
+      <ListItem.Content>
+        <ListItem.Title>
+          {moment(item.date).locale("it").format("dddd, D MMMM YYYY")}
+        </ListItem.Title>
+        <ListItem.Subtitle>{item.holidayName}</ListItem.Subtitle>
+      </ListItem.Content>
+    </ListItem>
+);
+
+export default function ListView(props) {
+  return (
+    <View style={{ flex: 1 }}>
+      
+      <FlatList
         containerStyle={{
-          padding: 0,
-          width: "70%",
-          marginLeft: "auto",
-          marginRight: "auto",
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center"
         }}
-      >
-        {props.currentYear.map((date, i) => (
-          <ListItem
-            key={i}
-            bottomDivider
-            containerStyle={{
-              backgroundColor: (date.isWeekend || date.isHoliday) ? "#C9E4C5" : "whitesmoke",
-            }}
-          >
-            <ListItem.Content>
-              <ListItem.Title>
-                {moment(date.date).locale("it").format("dddd, D MMMM YYYY")}
-              </ListItem.Title>
-              <ListItem.Subtitle>
-                {date.holidayName}
-              </ListItem.Subtitle>
-            </ListItem.Content>
-          </ListItem>
-        ))}
-      </Card>
-    </ScrollView>
+        keyExtractor={keyExtractor}
+        data={props.currentYear}
+        renderItem={renderItem}
+      />
+    </View>
   );
 }

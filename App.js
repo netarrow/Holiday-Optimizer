@@ -40,7 +40,7 @@ export default function App() {
             tabBarInactiveTintColor: "gray",
           })}
         >
-          <Tab.Screen name="List" children={()=><ListView currentYear={currentYear}/>} /> 
+          <Tab.Screen name="List" children={()=> <ListView currentYear={currentYear}/>} /> 
           <Tab.Screen name="Calendar" children={()=><CalendarView currentYear={currentYear}/>} /> 
         </Tab.Navigator>
       </NavigationContainer>
