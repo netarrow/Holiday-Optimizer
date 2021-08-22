@@ -3,11 +3,23 @@ import { StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
+import getHolidays from "./serviceWrapper";
+import generateCurrentYear from "./calendarUtilities.js";
 import ListView from "./ListView";
 import CalendarView from './CalendarView'
+import { useState, useEffect } from "react";
 
 export default function App() {
   const Tab = createBottomTabNavigator();
+
+  const [currentYear, setCurrentYear] = useState([]);
+
+  useEffect(() => {
+    getHolidays(2021, "IT").then((result) => {
+      setCurrentYear(generateCurrentYear(result.data));
+    });
+  });
+
   return (
       <NavigationContainer>
         <Tab.Navigator
@@ -28,8 +40,8 @@ export default function App() {
             tabBarInactiveTintColor: "gray",
           })}
         >
-          <Tab.Screen name="List" component={ListView} />
-          <Tab.Screen name="Calendar" component={CalendarView} />
+          <Tab.Screen name="List" children={()=><ListView currentYear={currentYear}/>} /> 
+          <Tab.Screen name="Calendar" children={()=><CalendarView currentYear={currentYear}/>} /> 
         </Tab.Navigator>
       </NavigationContainer>
   );
