@@ -1,67 +1,65 @@
 import * as React from "react";
-import { FlatList, View, Dimensions, Button } from "react-native";
+import { FlatList, View, Dimensions, Button, ScrollView } from "react-native";
 import { ListItem, Card } from "react-native-elements";
 import moment from "moment";
 import "moment/locale/it";
 
-var keyExtractor = (item) => item.id.toString()
+var dayMap = {};
 
-var renderItem = ({ item }) => (
-    <ListItem
-      bottomDivider
-      key={item.id.toString()}
-      containerStyle={{
-        width: "70%",
-        marginLeft: "auto",
-        marginRight: "auto",
-        backgroundColor:
-          item.isWeekend || item.isHoliday ? "#C9E4C5" : "whitesmoke",
-      }}
-    >
-      <ListItem.Content>
-        <ListItem.Title>
-          {moment(item.date).locale("it").format("dddd, D MMMM YYYY")}
-        </ListItem.Title>
-        <ListItem.Subtitle>{item.holidayName}</ListItem.Subtitle>
-      </ListItem.Content>
-    </ListItem>
+var renderItem = (item) => (
+  <ListItem
+    bottomDivider
+    key={item.id.toString()}
+    containerStyle={{
+      backgroundColor:
+        item.isWeekend || item.isHoliday ? "#C9E4C5" : "whitesmoke",
+    }}
+    onLayout={(event) => {
+      if (event && event.nativeEvent && event.nativeEvent.layout) {
+        let y = event.nativeEvent.layout.y;
+        dayMap[item.id] = y;
+      }
+    }}
+  >
+    <ListItem.Content>
+      <ListItem.Title>
+        {moment(item.date).locale("it").format("dddd, D MMMM YYYY")}
+      </ListItem.Title>
+      <ListItem.Subtitle>
+        {item.holidayName} - {item.id}
+      </ListItem.Subtitle>
+    </ListItem.Content>
+  </ListItem>
 );
 
-const getItemLayout = (data, index) => (
-  {length: 100, offset: 100 * index, index}
-);
-
-var dayList
+var dayList;
 
 function ListView(props) {
   return (
-    <View style={{ flex: 4, flexDirection: 'row' }}>
-      <View style={{ borderColor: 'black', borderWidth: 1, flex: 1 }}>
-      <Button onPress={() => dayList.scrollToIndex({animated: true, index: 0}) } title="Capodanno"></Button>
-        <Button onPress={() => dayList.scrollToIndex({animated: true, index: 2}) } title="Festa liberazione"></Button>
+    <View style={{ flex: 1, flexDirection: "row" }}>
+      <View style={{ borderColor: "black", borderWidth: 1, flex: 1 }}>
+        <Button
+          onPress={() =>
+            dayList.scrollTo({ x: 0, y: dayMap[1019114621], animated: false })
+          }
+          title="Capodanno"
+        ></Button>
+        <Button
+          onPress={() =>
+            dayList.scrollTo({ x: 0, y: dayMap[1019204060], animated: false })
+          }
+          title="Festa liberazione"
+        ></Button>
       </View>
-      <View style={{ flex: 3 }}>
-        <FlatList ref={(ref) => { dayList = ref }}
-        initialNumToRender={365}
-        initialScrollIndex={0}
-        getItemLayout={getItemLayout}
-        onScrollToIndexFailed={info => {
-          console.log('failed to scroll')
-          console.log(info)
-        }}
-        containerStyle={{
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center"
-        }}
-        keyExtractor={keyExtractor}
-        data={props.currentYear}
-        renderItem={renderItem}
-        windowSize={10}
-      />
-      </View>
+      <ScrollView
+        ref={(ref) => (dayList = ref)}
+      >
+        <Card>
+          {props.currentYear.map((date, i) => renderItem(date))}
+        </Card>
+      </ScrollView>
     </View>
   );
 }
 
-export default React.memo(ListView)
+export default React.memo(ListView);
