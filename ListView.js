@@ -4,12 +4,12 @@ import { ListItem, Card } from "react-native-elements";
 import moment from "moment";
 import "moment/locale/it";
 
-var keyExtractor = (item) => item.id.toString();
+var keyExtractor = (item) => item.id.toString()
 
-var renderItem = ({ item, i }) => (
+var renderItem = ({ item }) => (
     <ListItem
       bottomDivider
-      key={i}
+      key={item.id.toString()}
       containerStyle={{
         width: "70%",
         marginLeft: "auto",
@@ -27,19 +27,27 @@ var renderItem = ({ item, i }) => (
     </ListItem>
 );
 
-let dayList = React.createRef()
-export default function ListView(props) {
+const getItemLayout = (data, index) => (
+  {length: 100, offset: 100 * index, index}
+);
+
+var dayList
+
+function ListView(props) {
   return (
     <View style={{ flex: 4, flexDirection: 'row' }}>
       <View style={{ borderColor: 'black', borderWidth: 1, flex: 1 }}>
-      <Button onPress={() => dayList.scrollToIndex({animated: false, index: 0}) } title="Capodanno"></Button>
-        <Button onPress={() => dayList.scrollToIndex({animated: false, index: 110}) } title="Festa liberazione"></Button>
+      <Button onPress={() => dayList.scrollToIndex({animated: true, index: 0}) } title="Capodanno"></Button>
+        <Button onPress={() => dayList.scrollToIndex({animated: true, index: 2}) } title="Festa liberazione"></Button>
       </View>
       <View style={{ flex: 3 }}>
         <FlatList ref={(ref) => { dayList = ref }}
         initialNumToRender={365}
         initialScrollIndex={0}
+        getItemLayout={getItemLayout}
         onScrollToIndexFailed={info => {
+          console.log('failed to scroll')
+          console.log(info)
         }}
         containerStyle={{
           flex: 1,
@@ -49,8 +57,11 @@ export default function ListView(props) {
         keyExtractor={keyExtractor}
         data={props.currentYear}
         renderItem={renderItem}
+        windowSize={10}
       />
       </View>
     </View>
   );
 }
+
+export default React.memo(ListView)
