@@ -23,6 +23,7 @@ export default function generateCurrentYear(holidays) {
         let id = hashCode(moment(day).format('YYYY-MM-DD'))
         daysOfYear.push({ 
             date: day,
+            id: id,
             isHoliday: holidayHashtable[id],
             holidayName: holidayHashtable[id] ? holidayHashtable[id].localName : '',
             isWeekend: day.getDay() === 0 || day.getDay() === 6 });
