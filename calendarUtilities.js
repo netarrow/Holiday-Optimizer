@@ -6,7 +6,7 @@ function hashCode(s) {
     return h;
 }
 
-export default function generateCurrentYear(holidays) {
+function generateCurrentYear(holidays) {
     var now, end
     now = new Date(2021, 0, 1, 0, 0, 0, 0)
 
@@ -31,3 +31,5 @@ export default function generateCurrentYear(holidays) {
 
     return daysOfYear
 }
+
+export { generateCurrentYear, hashCode }

@@ -1,10 +1,12 @@
 import * as React from "react";
 import { FlatList, View, Dimensions, Button, ScrollView } from "react-native";
 import { ListItem, Card } from "react-native-elements";
+import { hashCode } from "./calendarUtilities.js";
 import moment from "moment";
 import "moment/locale/it";
 
 var dayMap = {};
+var dayList;
 
 var renderItem = (item) => (
   <ListItem
@@ -17,7 +19,7 @@ var renderItem = (item) => (
     onLayout={(event) => {
       if (event && event.nativeEvent && event.nativeEvent.layout) {
         let y = event.nativeEvent.layout.y;
-        dayMap[item.id] = y;
+        dayMap[item.id] = Math.trunc(y)
       }
     }}
   >
@@ -26,34 +28,27 @@ var renderItem = (item) => (
         {moment(item.date).locale("it").format("dddd, D MMMM YYYY")}
       </ListItem.Title>
       <ListItem.Subtitle>
-        {item.holidayName} - {item.id}
+        {item.holidayName}
       </ListItem.Subtitle>
     </ListItem.Content>
   </ListItem>
 );
 
-var dayList;
+const renderButton = (item) => (
+  <Button
+      key={item.id.toString()}
+      onPress={() => dayList.scrollTo({ x: 0, y: dayMap[item.id], animated: false }) }
+      title={item.localName}></Button>
+  );
 
 function ListView(props) {
   return (
     <View style={{ flex: 1, flexDirection: "row" }}>
       <View style={{ borderColor: "black", borderWidth: 1, flex: 1 }}>
-        <Button
-          onPress={() =>
-            dayList.scrollTo({ x: 0, y: dayMap[1019114621], animated: false })
-          }
-          title="Capodanno"
-        ></Button>
-        <Button
-          onPress={() =>
-            dayList.scrollTo({ x: 0, y: dayMap[1019204060], animated: false })
-          }
-          title="Festa liberazione"
-        ></Button>
+       {props.holidays.map((holiday) => renderButton(holiday))}
       </View>
       <ScrollView
-        ref={(ref) => (dayList = ref)}
-      >
+        ref={(ref) => (dayList = ref)}>
         <Card>
           {props.currentYear.map((date, i) => renderItem(date))}
         </Card>
