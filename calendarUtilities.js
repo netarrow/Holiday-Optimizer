@@ -8,19 +8,19 @@ function hashCode(s) {
 
 function generateCurrentYear(holidays) {
     var now, end
-    now = new Date(2021, 0, 1, 0, 0, 0, 0)
+    now = new Date(2020, 8, 1, 0, 0, 0, 0)
 
     now.setHours(0, 0, 0, 0)
-    end = new Date(2021, 11, 31, 0, 0, 0, 0)
+    end = new Date(2021, 7, 31, 0, 0, 0, 0)
 
     var daysOfYear = [];
 
     var holidayHashtable = {}
-    holidays.forEach(_ => holidayHashtable[hashCode(_.date)] = _)
+    holidays.forEach(_ => holidayHashtable[hashCode(_.date.slice(5))] = _)
 
     for (var d = now; d <= end; d.setDate(d.getDate() + 1)) {
         let day = new Date(d)
-        let id = hashCode(moment(day).format('YYYY-MM-DD'))
+        let id = hashCode(moment(day).format('MM-DD'))
         daysOfYear.push({ 
             date: day,
             id: id,

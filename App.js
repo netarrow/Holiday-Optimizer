@@ -18,7 +18,7 @@ export default function App() {
   useEffect(() => {
     if (currentYear.length === 0 || holidays.length === 0) {
       getHolidays(2021, "IT").then((result) => {
-        result.data.forEach((item) => item.id = hashCode(item.date))
+        result.data.forEach((item) => item.id = hashCode(item.date.slice(5)))
         setHolidays(result.data)
         setCurrentYear(generateCurrentYear(result.data));
       });
