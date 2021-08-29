@@ -8,8 +8,9 @@ import { generateCurrentYear, hashCode } from "./calendarUtilities.js";
 import ListView from "./ListView";
 import CalendarView from './CalendarView'
 import { useState, useEffect } from "react";
+import { registerRootComponent } from 'expo';
 
-export default function App() {
+function App() {
   const Tab = createBottomTabNavigator();
 
   const [currentYear, setCurrentYear] = useState([]);
@@ -51,3 +52,5 @@ export default function App() {
       </NavigationContainer>
   );
 }
+
+export default registerRootComponent(App)
