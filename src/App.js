@@ -9,6 +9,8 @@ import ListView from "./ListView";
 import CalendarView from './CalendarView'
 import { useState, useEffect } from "react";
 import { registerRootComponent } from 'expo';
+import SettingsView from './SettingsView'
+import AboutView from './AboutView'
 
 function App() {
   const Tab = createBottomTabNavigator();
@@ -37,6 +39,10 @@ function App() {
                 iconName = "list"
               } else if (route.name === "Calendar") {
                 iconName = "calendar"
+              } else if (route.name === 'Settings') {
+                iconName = "settings"
+              } else if (route.name === 'About') {
+                iconName = "About"
               }
 
               // You can return any component that you like here!
@@ -46,8 +52,10 @@ function App() {
             tabBarInactiveTintColor: "gray",
           })}
         >
+          <Tab.Screen name="Settings" children={()=> <SettingsView />} />
           <Tab.Screen name="List" children={()=> <ListView currentYear={currentYear} holidays={holidays}/>} /> 
           <Tab.Screen name="Calendar" children={()=><CalendarView currentYear={currentYear} holidays={holidays}/>} /> 
+          <Tab.Screen name="About" children={()=> <AboutView />} />
         </Tab.Navigator>
       </NavigationContainer>
   );
