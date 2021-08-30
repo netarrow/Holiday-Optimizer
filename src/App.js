@@ -42,7 +42,7 @@ function App() {
               } else if (route.name === 'Settings') {
                 iconName = "settings"
               } else if (route.name === 'About') {
-                iconName = "About"
+                iconName = "help"
               }
 
               // You can return any component that you like here!
