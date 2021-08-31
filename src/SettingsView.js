@@ -1,32 +1,34 @@
 import React, { useState } from "react";
 import { Text, View, Switch } from "react-native";
 
+const days = [
+  { day: "Domenica", id: 0 },
+  { day: "Lunedì", id: 1 },
+  { day: "Martedì", id: 2 },
+  { day: "Mercoledì", id: 3 },
+  { day: "Giovedì", id: 4 },
+  { day: "Venerdì", id: 5 },
+  { day: "Sabato", id: 6 },
+];
+
 export default function SettingsView() {
   const [weDays, setweDays] = useState([]);
-  const toggleSwitch = (id) => { 
-    let newArray = Array.from(weDays)
+
+  const toggleSwitch = (id) => {
+    let newArray = Array.from(weDays);
     const index = newArray.indexOf(id);
     if (index > -1) {
       newArray.splice(index, 1);
     } else {
-      newArray.push(id); 
+      newArray.push(id);
     }
-    setweDays(newArray)
-  }
-
-  const days = [
-    { day: "Domenica", id : 0 },
-    { day: "Lunedì", id: 1 },
-    { day: "Martedì", id: 2 },
-    {day: "Mercoledì", id: 3 },
-    {day: "Giovedì", id: 4 },
-    {day: "Venerdì", id: 5 },
-    {day: "Sabato", id: 6 },
-  ];
-
+    setweDays(newArray);
+  };
   return (
-    <View>
-      <Text style={{marginBottom: 20}}>Indica quali sono i giorni della settimana dove non lavori normalmente</Text>
+     <View>
+      <Text style={{ marginBottom: 20 }}>
+        Indica quali sono i giorni della settimana dove non lavori normalmente
+      </Text>
       {days.map((item) => {
         return (
           <View
