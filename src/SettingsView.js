@@ -21,6 +21,7 @@ export default function SettingsView() {
 
   return (
     <View>
+      <Text style={{marginBottom: 20}}>Indica quali sono i giorni della settimana dove non lavori normalmente</Text>
       {days.map((item) => {
         return (
           <View
