@@ -5,7 +5,12 @@ export default function SettingsView() {
   const [weDays, setweDays] = useState([]);
   const toggleSwitch = (id) => { 
     let newArray = Array.from(weDays)
-    newArray.push(id);
+    const index = newArray.indexOf(id);
+    if (index > -1) {
+      newArray.splice(index, 1);
+    } else {
+      newArray.push(id); 
+    }
     setweDays(newArray)
   }
 
