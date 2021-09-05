@@ -18,7 +18,7 @@ function App() {
 
   const [currentYear, setCurrentYear] = useState([]);
   const [holidays, setHolidays] = useState([]);
-  const [weDays, setweDays] = useState([6, 0]);
+  const [weDays, setweDays] = useState([]);
   const [isLoaded, setLoaded] = useState(false);
 
   const getWeDays = async () => {
@@ -33,6 +33,7 @@ function App() {
   const init = async function init() {
     console.log('initializing')
     let nonworking = await getWeDays();
+    setweDays(nonworking)
     console.log(nonworking);
     getHolidays(2021, "IT").then((result) => {
       result.data.forEach((item) => (item.id = hashCode(item.date.slice(5))));
@@ -42,7 +43,7 @@ function App() {
   }
 
   useEffect(() => {
-    let asyncCall = async () => { init() }
+    let asyncCall = async () => { await init() }
     if (!isLoaded) {
       asyncCall();
       setLoaded(true);
@@ -79,7 +80,6 @@ function App() {
             <SettingsView
               weDays={weDays}
               setweDays={setweDays}
-              setLoaded={setLoaded}
               forceInit={init}
             />
           )}
