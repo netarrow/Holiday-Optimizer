@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Text, View, Switch } from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const days = [
   { day: "Lunedì", id: 1 },
@@ -11,18 +12,24 @@ const days = [
   { day: "Domenica", id: 0 }
 ];
 
-export default function SettingsView() {
-  const [weDays, setweDays] = useState([]);
+export default function SettingsView(props) {
 
-  const toggleSwitch = (id) => {
-    let newArray = Array.from(weDays);
+  const toggleSwitch = async (id) => {
+    let newArray = Array.from(props.weDays);
     const index = newArray.indexOf(id);
     if (index > -1) {
       newArray.splice(index, 1);
     } else {
       newArray.push(id);
     }
-    setweDays(newArray);
+    props.setweDays(newArray);
+    try {
+      await AsyncStorage.setItem('@weDays', JSON.stringify(newArray))
+      console.log(newArray)
+      props.forceInit()
+    } catch (e) {
+      console.log(e)
+    }
   };
   return (
      <View style={{ marginTop: 20, marginLeft: 20 }}>
@@ -43,10 +50,10 @@ export default function SettingsView() {
               <Switch 
                 style={{alignSelf:"flex-start"}}
                 trackColor={{ false: "#767577", true: "#81b0ff" }}
-                thumbColor={weDays.includes(item.id) ? "#f5dd4b" : "#f4f3f4"}
+                thumbColor={props.weDays.includes(item.id) ? "#f5dd4b" : "#f4f3f4"}
                 ios_backgroundColor="#3e3e3e"
                 onValueChange={(value) => toggleSwitch(item.id)}
-                value={weDays.includes(item.id)}
+                value={props.weDays.includes(item.id)}
               />
             </View>
           </View>

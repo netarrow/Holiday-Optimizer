@@ -6,7 +6,7 @@ function hashCode(s) {
     return h;
 }
 
-function generateCurrentYear(holidays) {
+function generateCurrentYear(holidays, noworking) {
     var now, end
     now = new Date(2020, 8, 1, 0, 0, 0, 0)
 
@@ -26,7 +26,7 @@ function generateCurrentYear(holidays) {
             id: id,
             isHoliday: holidayHashtable[id],
             holidayName: holidayHashtable[id] ? holidayHashtable[id].localName : '',
-            isWeekend: day.getDay() === 0 || day.getDay() === 6 });
+            isWeekend: noworking.includes(day.getDay()) });
     }
 
     return daysOfYear
