@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Text, View, Switch } from "react-native";
+import { Text, View, Switch, TextInput, Button } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import DatePicker from './datePicker'
 
 const days = [
   { day: "Lunedì", id: 1 },
@@ -13,6 +14,8 @@ const days = [
 ];
 
 export default function SettingsView(props) {
+  const [newHolidayName, setNewHolidayName] = useState('Nome festività')
+  const [newHoliday, setNewHoliday] = useState('2021/10/10')
 
   const toggleSwitch = async (id) => {
     let newArray = Array.from(props.weDays);
@@ -59,6 +62,14 @@ export default function SettingsView(props) {
           </View>
         );
       })}
+       <Text style={{ marginTop: 20 }}>
+        Indica eventuali festività extra
+      </Text>
+      <View style={{ flexDirection: "row" }}>
+        <View style={{alignSelf:"center"}}><TextInput style={{backgroundColor:"white"}} editable value={newHolidayName} onChangeText={setNewHolidayName}></TextInput></View>
+        <View style={{alignSelf:"center"}}><DatePicker value={newHoliday} inInput={setNewHoliday}></DatePicker></View>
+        <View style={{alignSelf:"center"}}><Button title="Aggiungi"></Button></View>
+      </View>
     </View>
   );
 }
