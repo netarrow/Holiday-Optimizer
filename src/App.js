@@ -18,6 +18,7 @@ function App() {
 
   const [currentYear, setCurrentYear] = useState([]);
   const [holidays, setHolidays] = useState([]);
+  const [extraHolidays, setExtraHolidays] = useState([{name: 'San Giusto', date: '2021-11-03', id: hashCode('2021-11-03')}]);
   const [weDays, setweDays] = useState([]);
   const [isLoaded, setLoaded] = useState(false);
 
@@ -36,6 +37,7 @@ function App() {
     setweDays(nonworking)
     console.log(nonworking);
     getHolidays(2021, "IT").then((result) => {
+      result.data.concat(extraHolidays)
       result.data.forEach((item) => (item.id = hashCode(item.date.slice(5))));
       setHolidays(result.data);
       setCurrentYear(generateCurrentYear(result.data, nonworking));
@@ -80,6 +82,8 @@ function App() {
             <SettingsView
               weDays={weDays}
               setweDays={setweDays}
+              extraHolidays={extraHolidays}
+              setExtraHolidays={setExtraHolidays}
               forceInit={init}
             />
           )}

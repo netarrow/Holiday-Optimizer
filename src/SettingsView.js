@@ -66,10 +66,18 @@ export default function SettingsView(props) {
         Indica eventuali festività extra
       </Text>
       <View style={{ flexDirection: "row" }}>
-        <View style={{alignSelf:"center"}}><TextInput style={{backgroundColor:"white"}} editable value={newHolidayName} onChangeText={setNewHolidayName}></TextInput></View>
-        <View style={{alignSelf:"center"}}><DatePicker value={newHoliday} inInput={setNewHoliday}></DatePicker></View>
+        <View style={{alignSelf:"center"}}><TextInput style={{backgroundColor:"white"}} editable onChangeText={(event) => setNewHolidayName(event)}></TextInput></View>
+        <View style={{alignSelf:"center"}}><DatePicker onChange={(event) => setNewHoliday(event)}></DatePicker></View>
         <View style={{alignSelf:"center"}}><Button title="Aggiungi"></Button></View>
       </View>
-    </View>
+        {props.extraHolidays.map((item) => {  
+          return (
+            <View key={item.id} style={{ flexDirection: "row", alignContent: 'flex-start' }}>
+              <Text style={{marginRight: 20}}>{item.name}</Text>
+              <Text>{item.date}</Text>
+            </View>
+          )
+         })}
+      </View>
   );
 }
