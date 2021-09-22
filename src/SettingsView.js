@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, View, Switch, TextInput, Button } from "react-native";
+import { Text, View, Switch, TextInput, Button, Platform } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import DatePicker from './datePicker'
 
@@ -15,7 +15,7 @@ const days = [
 
 export default function SettingsView(props) {
   const [newHolidayName, setNewHolidayName] = useState('Nome festività')
-  const [newHoliday, setNewHoliday] = useState('2021/10/10')
+  const [newHoliday, setNewHoliday] = useState('2021-10-10')
 
   const toggleSwitch = async (id) => {
     let newArray = Array.from(props.weDays);
@@ -66,14 +66,16 @@ export default function SettingsView(props) {
         Indica eventuali festività extra
       </Text>
       <View style={{ flexDirection: "row" }}>
-        <View style={{alignSelf:"center"}}><TextInput style={{backgroundColor:"white"}} editable onChangeText={(event) => setNewHolidayName(event)}></TextInput></View>
-        <View style={{alignSelf:"center"}}><DatePicker onChange={(event) => setNewHoliday(event)}></DatePicker></View>
+        <DatePicker onChange={(event) => setNewHoliday(event)}></DatePicker>
+      </View>
+      <View style={{ flexDirection: "row", marginBottom: Platform.OS === "ios" ? 150 : 10 }}>
+        <View style={{alignSelf:"center"}}><TextInput style={{backgroundColor:"white", width:150, height: 25}} editable onChangeText={(event) => setNewHolidayName(event)}></TextInput></View>
         <View style={{alignSelf:"center"}}><Button title="Aggiungi"></Button></View>
       </View>
         {props.extraHolidays.map((item) => {  
           return (
             <View key={item.id} style={{ flexDirection: "row", alignContent: 'flex-start' }}>
-              <Text style={{marginRight: 20}}>{item.name}</Text>
+              <Text style={{marginRight: 50}}>{item.name}</Text>
               <Text>{item.date}</Text>
             </View>
           )
