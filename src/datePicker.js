@@ -3,10 +3,11 @@ import { Text, View, Switch, TextInput, Button } from "react-native";
 import { Platform, StyleSheet } from "react-native";
 import { Picker } from "@react-native-picker/picker"
 
-export default function DatePicker(value, onChange) {
+export default function DatePicker(props) {
   return (
     <View style={{ flexDirection: "row" }}>
-      <Picker
+      <Picker selectedValue={props.month}
+              onValueChange={(itemValue) => { props.onChangeMonth(itemValue)}}
         style={{ height: 25, width: 150 }}
       >
         <Picker.Item label="Settembre" value="9" />
@@ -23,6 +24,8 @@ export default function DatePicker(value, onChange) {
         <Picker.Item label="Agosto" value="8" />
       </Picker>
       <Picker
+        selectedValue={props.day}
+        onValueChange={(itemValue) => props.onChangeDay(itemValue)}
         style={{ height: 25, width: 150 }}
       >
         <Picker.Item label="1" value="1" />

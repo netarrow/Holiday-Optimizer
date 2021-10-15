@@ -15,7 +15,8 @@ const days = [
 
 export default function SettingsView(props) {
   const [newHolidayName, setNewHolidayName] = useState('Nome festività')
-  const [newHoliday, setNewHoliday] = useState('2021-10-10')
+  const [newHolidayMonth, setNewHolidayMonth] = useState('1')
+  const [newHolidayDay, setNewHolidayDay] = useState('1')
 
   const toggleSwitch = async (id) => {
     let newArray = Array.from(props.weDays);
@@ -66,7 +67,7 @@ export default function SettingsView(props) {
         Indica eventuali festività extra
       </Text>
       <View style={{ flexDirection: "row" }}>
-        <DatePicker onChange={(event) => setNewHoliday(event)}></DatePicker>
+        <DatePicker day={newHolidayDay} month={newHolidayMonth} onChangeDay={(event) => setNewHolidayDay(event)} onChangeMonth={(event) => setNewHolidayMonth(event)}></DatePicker>
       </View>
       <View style={{ flexDirection: "row", marginBottom: Platform.OS === "ios" ? 150 : 10 }}>
         <View style={{alignSelf:"center"}}><TextInput style={{backgroundColor:"white", width:150, height: 25}} editable onChangeText={(event) => setNewHolidayName(event)}></TextInput></View>
