@@ -78,6 +78,13 @@ export default function SettingsView(props) {
             <View key={item.id} style={{ flexDirection: "row", alignContent: 'flex-start' }}>
               <Text style={{marginRight: 50}}>{item.name}</Text>
               <Text>{item.date}</Text>
+              <Button title="-" onPress={(event) => { 
+                let btnId = item.id
+                var removeIndex = props.extraHolidays.map(item => item.id).indexOf(btnId)
+                props.extraHolidays.splice(removeIndex, 1)
+                props.setExtraHolidays(props.extraHolidays)
+                props.forceInit()
+              }}></Button>
             </View>
           )
          })}
