@@ -70,9 +70,9 @@ export default function SettingsView(props) {
       <View style={{ flexDirection: "row" }}>
         <View style={{alignSelf:"center"}}><TextInput style={{backgroundColor:"white", width:150, height: 25}} editable onChangeText={(event) => setNewHolidayName(event)}></TextInput></View>
         <DatePicker day={newHolidayDay} month={newHolidayMonth} onChangeDay={(event) => setNewHolidayDay(event)} onChangeMonth={(event) => setNewHolidayMonth(event)}></DatePicker>
-        <View style={{alignSelf:"center"}}><Button title="Aggiungi" onPress={(event) => { 
+        <View style={{alignSelf:"center"}}><Button title="Aggiungi" onPress={async (event) => { 
              props.extraHolidays.push({name: newHolidayName, date: `2021-${newHolidayMonth}-${newHolidayDay}`, id: hashCode(`2021-${newHolidayMonth}-${newHolidayDay}`)})
-             props.setExtraHolidays(props.extraHolidays)
+             await AsyncStorage.setItem('@extraHolidays', JSON.stringify(props.extraHolidays))
              props.forceInit()
          }}></Button></View>
       </View>
@@ -81,11 +81,11 @@ export default function SettingsView(props) {
             <View key={item.id} style={{ flexDirection: "row", marginTop: 20 }}>
               <View style={{alignSelf:"center"}}><Text style={{marginRight: 50}}>{item.name}</Text></View>
               <View style={{alignSelf:"center"}}><Text style={{marginRight: 50}}>{item.date}</Text></View>
-              <View style={{alignSelf:"center"}}><Button title="Rimuovi" onPress={(event) => { 
+              <View style={{alignSelf:"center"}}><Button title="Rimuovi" onPress={async (event) => { 
                 let btnId = item.id
                 var removeIndex = props.extraHolidays.map(item => item.id).indexOf(btnId)
                 props.extraHolidays.splice(removeIndex, 1)
-                props.setExtraHolidays(props.extraHolidays)
+                await AsyncStorage.setItem('@extraHolidays', JSON.stringify(props.extraHolidays))
                 props.forceInit()
               }}></Button></View>
             </View>

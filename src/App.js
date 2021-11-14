@@ -31,16 +31,26 @@ function App() {
     }
   };
 
+  const getExtraDays = async () => {
+    try {
+      const value = await AsyncStorage.getItem("@extraHolidays");
+      return value ? JSON.parse(value) : [];
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   const init = async function init() {
     console.log('initializing')
     let nonworking = await getWeDays();
+    let extradays = await getExtraDays();
     setweDays(nonworking)
-    console.log(nonworking);
+    setExtraHolidays(extradays)
     getHolidays(2021, "IT").then((result) => {
-      result.data.concat(extraHolidays)
+      result.data.concat(extraHolidays).concat(extradays)
       result.data.forEach((item) => (item.id = hashCode(item.date.slice(5))));
       setHolidays(result.data);
-      setCurrentYear(generateCurrentYear(result.data, nonworking));
+      setCurrentYear(generateCurrentYear(result.data, nonworking, extradays));
     });
   }
 
