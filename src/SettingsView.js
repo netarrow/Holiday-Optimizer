@@ -67,24 +67,22 @@ export default function SettingsView(props) {
         Indica eventuali festività extra
       </Text>
       <View style={{ flexDirection: "row" }}>
-        <DatePicker day={newHolidayDay} month={newHolidayMonth} onChangeDay={(event) => setNewHolidayDay(event)} onChangeMonth={(event) => setNewHolidayMonth(event)}></DatePicker>
-      </View>
-      <View style={{ flexDirection: "row", marginBottom: Platform.OS === "ios" ? 150 : 10 }}>
         <View style={{alignSelf:"center"}}><TextInput style={{backgroundColor:"white", width:150, height: 25}} editable onChangeText={(event) => setNewHolidayName(event)}></TextInput></View>
+        <DatePicker day={newHolidayDay} month={newHolidayMonth} onChangeDay={(event) => setNewHolidayDay(event)} onChangeMonth={(event) => setNewHolidayMonth(event)}></DatePicker>
         <View style={{alignSelf:"center"}}><Button title="Aggiungi"></Button></View>
       </View>
         {props.extraHolidays.map((item) => {  
           return (
-            <View key={item.id} style={{ flexDirection: "row", alignContent: 'flex-start' }}>
-              <Text style={{marginRight: 50}}>{item.name}</Text>
-              <Text>{item.date}</Text>
-              <Button title="-" onPress={(event) => { 
+            <View key={item.id} style={{ flexDirection: "row", marginTop: 20 }}>
+              <View style={{alignSelf:"center"}}><Text style={{marginRight: 50}}>{item.name}</Text></View>
+              <View style={{alignSelf:"center"}}><Text style={{marginRight: 50}}>{item.date}</Text></View>
+              <View style={{alignSelf:"center"}}><Button title="Rimuovi" onPress={(event) => { 
                 let btnId = item.id
                 var removeIndex = props.extraHolidays.map(item => item.id).indexOf(btnId)
                 props.extraHolidays.splice(removeIndex, 1)
                 props.setExtraHolidays(props.extraHolidays)
                 props.forceInit()
-              }}></Button>
+              }}></Button></View>
             </View>
           )
          })}
