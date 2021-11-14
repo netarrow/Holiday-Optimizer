@@ -18,7 +18,7 @@ function App() {
 
   const [currentYear, setCurrentYear] = useState([]);
   const [holidays, setHolidays] = useState([]);
-  const [extraHolidays, setExtraHolidays] = useState([{name: 'San Giusto', date: '2021-11-03', id: hashCode('2021-11-03')}]);
+  const [extraHolidays, setExtraHolidays] = useState([]);
   const [weDays, setweDays] = useState([]);
   const [isLoaded, setLoaded] = useState(false);
 

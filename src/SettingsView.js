@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Text, View, Switch, TextInput, Button, Platform } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import DatePicker from './datePicker'
+import { hashCode } from "./calendarUtilities.js";
 
 const days = [
   { day: "Lunedì", id: 1 },
@@ -69,7 +70,11 @@ export default function SettingsView(props) {
       <View style={{ flexDirection: "row" }}>
         <View style={{alignSelf:"center"}}><TextInput style={{backgroundColor:"white", width:150, height: 25}} editable onChangeText={(event) => setNewHolidayName(event)}></TextInput></View>
         <DatePicker day={newHolidayDay} month={newHolidayMonth} onChangeDay={(event) => setNewHolidayDay(event)} onChangeMonth={(event) => setNewHolidayMonth(event)}></DatePicker>
-        <View style={{alignSelf:"center"}}><Button title="Aggiungi"></Button></View>
+        <View style={{alignSelf:"center"}}><Button title="Aggiungi" onPress={(event) => { 
+             props.extraHolidays.push({name: newHolidayName, date: `2021-${newHolidayMonth}-${newHolidayDay}`, id: hashCode(`2021-${newHolidayMonth}-${newHolidayDay}`)})
+             props.setExtraHolidays(props.extraHolidays)
+             props.forceInit()
+         }}></Button></View>
       </View>
         {props.extraHolidays.map((item) => {  
           return (
